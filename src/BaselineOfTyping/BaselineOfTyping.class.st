@@ -17,10 +17,18 @@ BaselineOfTyping >> baseline: spec [
 				spec package: 'Assume'.
 			].
 
+			spec baseline: 'Interfaces' with: [
+				| myRepo |
+
+				myRepo := #IceRepository asClass registry detect:[ :each | each loadedPackages contains: [ :icep | icep name = self class package name ] ].
+				spec repository: 'tonel://' , myRepo location pathString , '/src'
+			].
+
 			spec
 				package: #'Typing' with:[
 					hasAssume
-						ifFalse:[spec requires:#('Assume')]];
+						ifTrue: [spec requires:#(         'Interfaces')]
+						ifFalse:[spec requires:#('Assume' 'Interfaces')]];
 				package: #'Typing-Examples' with:[spec requires: 'Typing'].
 		]
 ]
