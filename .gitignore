@@ -1,0 +1,23 @@
+GNUmakefile.local
+
+# Pharo
+pharo/pharo*
+pharo/Pharo*
+pharo/icon-packs
+pharo/progress.log
+pharo/*.image
+pharo/*.changes
+pharo/*Test.xml
+pharo/bin
+pharo/lib
+pharo/Pharo*.zip
+pharo/crash.dmp
+
+# Smalltalk/X
+stx/stx
+stx/package-cache
+stx/*Test.xml
+
+# git merge by-products
+*.orig
+
