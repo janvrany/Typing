@@ -1,0 +1,38 @@
+name: Test
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events...
+  push:
+    branches: [ master]
+  pull_request:
+    branches: [ master]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: "${{matrix.dialect}}, ${{matrix.os}}"
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest ] #, windows-latest]
+        dialect: [ pharo , stx ]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Fetch commits so that Iceberg doesn't crash
+        run: git fetch --unshallow
+
+      - name: Build
+        run: |
+          make -C ${{matrix.dialect}}
+
+      - name: Test
+        run: |
+          make -C ${{matrix.dialect}} test
